@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     web.vm.hostname = "web-server"
     web.vm.network "private_network", type: "static", ip: "192.168.56.10"
     web.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
+      vb.memory = "2048"
     end
 
     # Configure VM1 for Web Server
@@ -33,4 +33,33 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
+
+# VM2: Database Server
+  config.vm.define "db" do |db|
+    db.vm.hostname = "db-server"
+    db.vm.network "private_network", type: "static", ip: "192.168.56.11"
+    db.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+    end
+
+    # Configure VM2 for MySQL Server
+    db.vm.provision "shell", inline: <<-SHELL
+      # Update and install MySQL Server
+      sudo apt-get update
+      sudo apt-get install -y mysql-server
+
+      # Create Database and App User
+      sudo mysql -e "CREATE DATABASE wordpress;"
+      sudo mysql -e "CREATE USER 'wp_user'@'%' IDENTIFIED BY 'password';"
+      sudo mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp_user'@'%';"
+      sudo mysql -e "FLUSH PRIVILEGES;"
+
+      # Restart MySQL service
+      sudo systemctl enable mysql
+      sudo systemctl start mysql
+    SHELL
+  end
+
+
+  
 end
