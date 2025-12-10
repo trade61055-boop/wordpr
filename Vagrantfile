@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
   # VM1: Web Server
   config.vm.define "web" do |web|
     web.vm.hostname = "web-server"
-    web.vm.network "private_network", type: "dhcp"
+    web.vm.network "private_network", type: "static", ip: "192.168.56.10"
     web.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
     end
