@@ -72,9 +72,9 @@ Vagrant.configure("2") do |config|
       sudo mysql -u root
       sudo mysql -e "CREATE DATABASE wordpress;"
       # sudo mysql -e "CREATE USER 'wp_user'@'%' IDENTIFIED BY 'password';"
-      CREATE USER wordpress@localhost IDENTIFIED BY 'anjan123';
+      CREATE USER wordpress@192.168.56.11 IDENTIFIED BY 'anjan123';
       # sudo mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wp_user'@'%';"
-      GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO wordpress@localhost;
+      GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO wordpress@192.168.56.11;
       sudo mysql -e "FLUSH PRIVILEGES;"
 
       # Restart MySQL service
